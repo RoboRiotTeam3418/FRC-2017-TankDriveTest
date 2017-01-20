@@ -2,8 +2,9 @@ package com.team3418.frc2016;
 
 // import classes used in main robot program
 import com.team3418.frc2016.Constants;
+import com.team3418.frc2016.subsystems.Shooter;
+
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 
 /**
  * The main robot class, which instantiates all robot parts and helper classes.
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj.RobotDrive.MotorType;
  */
 public class Robot extends IterativeRobot {
     // Subsystems
+	Shooter mShooter = new Shooter();
 	
     // Other parts of the robot
     ControlBoard mControls = ControlBoard.getInstance();
@@ -25,17 +27,17 @@ public class Robot extends IterativeRobot {
     
     
     private void stopAllSubsystems(){
+    	mShooter.stopShooterState();
 	}
     
     private void updateAllSubsystems() {
+    	mShooter.updateSubsystemState();
     }
     
     
     @Override
     public void robotInit() {
     	//set initial wanted states for all subsystems
-    	mDrive.setInvertedMotor(MotorType.kFrontLeft, true);
-    	mDrive.setInvertedMotor(MotorType.kRearLeft, true);
 
     	stopAllSubsystems();
     	updateAllSubsystems();
@@ -72,12 +74,25 @@ public class Robot extends IterativeRobot {
     	mNow = Timer.getFPGATimestamp();
     	
     	
+    	if(mControls.decreaseShooterSetpointButton()){
+    		if (mShooter.getTargetRpm() > 0){
+        		mShooter.setTargetRpm(mShooter.getTargetRpm() - 100);
+    		}
+    	} else if(mControls.increaseShooterSetpointButton()){
+    		mShooter.setTargetRpm(mShooter.getTargetRpm() + 100);
+    	}
+    	
+    	
+    	if(mControls.spoolShooter()){
+    		mShooter.RpmShooterState();;
+    	} else {
+    		mShooter.stopShooterState();
+    	}
+    	
+    	
     	    	
     	// simple drive control
     	mDrive.tankDrive(mControls.getLeftThrottle(), mControls.getRightThrottle());
-    	//
-    	System.out.println("X (sideways) =" + mControls.getLeftThrottle());
-    	System.out.println("Y (forwards) =" + mControls.getRightThrottle());
 
 
 

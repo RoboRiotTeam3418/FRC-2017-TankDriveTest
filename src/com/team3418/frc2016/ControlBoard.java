@@ -81,6 +81,16 @@ public class ControlBoard {
     	else return 0;
     }
     
+    public boolean increaseShooterSetpointButton(){
+    	return mDriverStick.getRawButton(button);
+    }
     
+    public boolean decreaseShooterSetpointButton(){
+    	return mDriverStick.getRawButton(button);
+    }
+    
+    public boolean spoolShooter(){
+    	return mDriverStick.getRawButton(button);
+    }
     
 }
