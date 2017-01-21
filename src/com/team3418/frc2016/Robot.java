@@ -89,12 +89,7 @@ public class Robot extends IterativeRobot {
     	
     	if(mControls.spoolShooter()){
     		mShooter.RpmShooterState();
-    		mShooter.RpmShooterState();;
-    	} else if(mControls.ShooterOpenLoopAxis() > .10){
-    		mShooter.OpenLoopShooterState();
-    		mShooter.setTargetSpeed(mControls.ShooterOpenLoopAxis());
     	} else {
-    		mShooter.setTargetSpeed(0);
     		mShooter.stopShooterState();
     	}
     	

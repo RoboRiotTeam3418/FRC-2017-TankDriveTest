@@ -27,10 +27,11 @@ public class Shooter extends Subsystem {
 		mShooterTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		mShooterTalon.enableBrakeMode(false);
 		mShooterTalon.reverseSensor(false);
+		mShooterTalon.reverseOutput(true);
 		mShooterTalon.changeControlMode(TalonControlMode.Speed);
 		mShooterTalon.set(0);
 		mShooterTalon.configNominalOutputVoltage(+0.0f, -0.0f);
-		mShooterTalon.configPeakOutputVoltage(+12.0f, 0f);
+		mShooterTalon.configPeakOutputVoltage(+12.0f, -12.0f);
 		mShooterTalon.setProfile(0);
 		mShooterTalon.setPID(Constants.kFlywheelKp, Constants.kFlywheelKi, Constants.kFlywheelKd, Constants.kFlywheelKf,
                 Constants.kFlywheelIZone, Constants.kFlywheelRampRate, 0);
@@ -54,7 +55,7 @@ public class Shooter extends Subsystem {
     private double mTargetRpm;
     
     public void setTargetSpeed(double speed){
-    	mTargetSpeed = (speed - .10)*1000;
+    	mTargetSpeed = speed*1000;
     }
     
     public void setTargetRpm(double rpm){
@@ -101,6 +102,7 @@ public class Shooter extends Subsystem {
 		}
 		
 		printShooterInfo();
+		outputToSmartDashboard();
 		
 		if (isOnTarget()){
 			mShooterReadyState = ShooterReadyState.READY;
@@ -177,6 +179,11 @@ public class Shooter extends Subsystem {
         SmartDashboard.putNumber("flywheel_setpoint", mShooterTalon.getSetpoint());
         SmartDashboard.putBoolean("flywheel_on_target", isOnTarget());
         SmartDashboard.putNumber("flywheel_master_current", mShooterTalon.getOutputCurrent());
+        SmartDashboard.putNumber("flywheel_target_rpm", getTargetRpm());
+        SmartDashboard.putNumber("flywheel_target_speed", getTargetSpeed());
+        SmartDashboard.putNumber("Motor_Output", getMotorOutput());
+		SmartDashboard.putNumber("flywheel_Speed", mShooterTalon.getSpeed());
+        SmartDashboard.putNumber("Closed_Loop_error", mShooterTalon.getClosedLoopError());
 	}
     
     
