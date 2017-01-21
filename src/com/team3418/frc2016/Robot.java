@@ -29,7 +29,7 @@ public class Robot extends IterativeRobot {
     
     
     private void stopAllSubsystems(){
-    	mShooter.stopShooterState();
+    	mShooter.stop();
 	}
     
     private void updateAllSubsystems() {
@@ -88,9 +88,9 @@ public class Robot extends IterativeRobot {
     	
     	
     	if(mControls.spoolShooter()){
-    		mShooter.RpmShooterState();
+    		mShooter.setRpm();
     	} else {
-    		mShooter.stopShooterState();
+    		mShooter.stop();
     	}
     	
     	

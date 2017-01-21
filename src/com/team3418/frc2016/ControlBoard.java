@@ -93,8 +93,4 @@ public class ControlBoard {
     	return mDriverStick.getRawButton(4);
     }
     
-    public double ShooterOpenLoopAxis(){
-    	return mDriverStick.getRawAxis(3);
-    }
-    
 }
