@@ -36,8 +36,8 @@ public class Constants {
     //PID gains for flywheel velocity
     public static double kFlywheelKp = 0.12;
     public static double kFlywheelKi = 0.0;
-    public static double kFlywheelKd = 0.5;
-    public static double kFlywheelKf = 0.014;
+    public static double kFlywheelKd = 0.0;
+    public static double kFlywheelKf = 0.0;
     public static int kFlywheelIZone = (int) (1023.0 / kFlywheelKp);
     public static double kFlywheelRampRate = 0;
     public static int kFlywheelAllowableError = 0;

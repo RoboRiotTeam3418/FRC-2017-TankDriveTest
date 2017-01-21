@@ -14,15 +14,16 @@ public class Shooter extends Subsystem {
 
     public static Shooter getInstance() {
         return mInstance;
-    }
-	
-    private CANTalon mShooterTalon = new CANTalon(/*Constants.*/);
+    }    
+    
+    private CANTalon mShooterTalon = new CANTalon(0);
 	
     
     public Shooter() {
-		//initialize shooter hardware settings
+    	//initialize shooter hardware settings
 		System.out.println("Shooter Initialized");
 		//leftshooter
+				
 		mShooterTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		mShooterTalon.enableBrakeMode(false);
 		mShooterTalon.reverseSensor(false);
@@ -52,11 +53,11 @@ public class Shooter extends Subsystem {
     private double mTargetSpeed;
     private double mTargetRpm;
     
-    public double setTargetSpeed(double speed){
+    public void setTargetSpeed(double speed){
     	mTargetSpeed = speed;
     }
     
-    public double setTargetRpm(double rpm){
+    public void setTargetRpm(double rpm){
     	mTargetRpm = rpm;
     	if(mTargetRpm < 0){
     		mTargetRpm = 0;
