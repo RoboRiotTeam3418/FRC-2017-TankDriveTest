@@ -66,7 +66,7 @@ public class ControlBoard {
     
     // DRIVER CONTROLS (mDriverStick)
     public double getLeftThrottle() {
-    	double X = mDriverStick.getRawAxis(1);
+    	double X = -mDriverStick.getRawAxis(1);
     	if (X > mStickDeadzone || X < -mStickDeadzone) {
         	return X;
     	}
@@ -74,7 +74,7 @@ public class ControlBoard {
     }
     
     public double getRightThrottle() {
-    	double Y = mDriverStick.getRawAxis(5);
+    	double Y = -mDriverStick.getRawAxis(5);
     	if (Y > mStickDeadzone || Y < -mStickDeadzone) {
         	return Y;
     	}
@@ -91,6 +91,10 @@ public class ControlBoard {
     
     public boolean spoolShooter(){
     	return mDriverStick.getRawButton(4);
+    }
+    
+    public double ShooterOpenLoopAxis(){
+    	return mDriverStick.getRawAxis(3);
     }
     
 }

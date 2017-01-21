@@ -5,6 +5,7 @@ import com.team3418.frc2016.Constants;
 import com.team3418.frc2016.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 
 /**
  * The main robot class, which instantiates all robot parts and helper classes.
@@ -17,6 +18,7 @@ public class Robot extends IterativeRobot {
     // Other parts of the robot
     ControlBoard mControls = ControlBoard.getInstance();
     RobotDrive mDrive = new RobotDrive(Constants.kLeftMotorPWMID, Constants.kRightMotorPWMID);
+    
     
 	double mNow;
     
@@ -38,6 +40,8 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
     	//set initial wanted states for all subsystems
+
+    	
 
     	stopAllSubsystems();
     	updateAllSubsystems();
@@ -76,18 +80,25 @@ public class Robot extends IterativeRobot {
     	
     	if(mControls.decreaseShooterSetpointButton()){
     		if (mShooter.getTargetRpm() > 0){
-        		mShooter.setTargetRpm(mShooter.getTargetRpm() - 100);
+        		mShooter.setTargetRpm(mShooter.getTargetRpm() - 10);
     		}
     	} else if(mControls.increaseShooterSetpointButton()){
-    		mShooter.setTargetRpm(mShooter.getTargetRpm() + 100);
+    		mShooter.setTargetRpm(mShooter.getTargetRpm() + 10);
     	}
     	
     	
     	if(mControls.spoolShooter()){
+    		mShooter.RpmShooterState();
     		mShooter.RpmShooterState();;
+    	} else if(mControls.ShooterOpenLoopAxis() > .10){
+    		mShooter.OpenLoopShooterState();
+    		mShooter.setTargetSpeed(mControls.ShooterOpenLoopAxis());
     	} else {
+    		mShooter.setTargetSpeed(0);
     		mShooter.stopShooterState();
     	}
+    	
+    	
     	
     	
     	    	

@@ -54,14 +54,11 @@ public class Shooter extends Subsystem {
     private double mTargetRpm;
     
     public void setTargetSpeed(double speed){
-    	mTargetSpeed = speed;
+    	mTargetSpeed = (speed - .10)*1000;
     }
     
     public void setTargetRpm(double rpm){
     	mTargetRpm = rpm;
-    	if(mTargetRpm < 0){
-    		mTargetRpm = 0;
-    	}
     }
     
     public double getTargetRpm(){
@@ -134,7 +131,8 @@ public class Shooter extends Subsystem {
 		System.out.println(" out: "+getMotorOutput()+
 				   " spd: "+mShooterTalon.getSpeed()+
 		           " err: "+mShooterTalon.getClosedLoopError()+
-		           " trg: "+mTargetSpeed);
+		           " trgrpm: "+getTargetRpm()+
+		           " trgspd: "+getTargetSpeed());
 	}
 	//
 	
