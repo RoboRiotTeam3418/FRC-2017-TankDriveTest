@@ -17,7 +17,7 @@ public class Robot extends IterativeRobot {
 	
     // Other parts of the robot
     ControlBoard mControls = ControlBoard.getInstance();
-    RobotDrive mDrive = new RobotDrive(Constants.kLeftMotorPWMID, Constants.kRightMotorPWMID);
+    //RobotDrive mDrive = new RobotDrive(Constants.kLeftMotorPWMID, Constants.kRightMotorPWMID);
     
     
 	double mNow;
@@ -88,7 +88,7 @@ public class Robot extends IterativeRobot {
     	
     	
     	if(mControls.spoolShooter()){
-    		mShooter.setRpm();
+    		mShooter.setRpm(mShooter.getTargetRpm());
     	} else {
     		mShooter.stop();
     	}
@@ -98,7 +98,7 @@ public class Robot extends IterativeRobot {
     	
     	    	
     	// simple drive control
-    	mDrive.tankDrive(mControls.getLeftThrottle(), mControls.getRightThrottle());
+    	//mDrive.tankDrive(mControls.getLeftThrottle(), mControls.getRightThrottle());
 
 
 

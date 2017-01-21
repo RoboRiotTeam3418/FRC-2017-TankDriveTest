@@ -30,15 +30,15 @@ public class Constants {
     
     
  // Flywheel constants
-    public static double kFlywheelOnTargetTolerance = 500.0;
+    public static double kFlywheelOnTargetTolerance = 100.0;
     public static double kFlywheelRpmSetpoint = 4200.0;
     
     //PID gains for flywheel velocity
     public static double kFlywheelKp = 0.12;
-    public static double kFlywheelKi = 0.0;
-    public static double kFlywheelKd = 0.0;
+    public static double kFlywheelKi = 0.0012;
+    public static double kFlywheelKd = 1.2;
     public static double kFlywheelKf = 0.0;
     public static int kFlywheelIZone = (int) (1023.0 / kFlywheelKp);
     public static double kFlywheelRampRate = 0;
-    public static int kFlywheelAllowableError = 0;
+    public static int kFlywheelAllowableError = 100;
 }

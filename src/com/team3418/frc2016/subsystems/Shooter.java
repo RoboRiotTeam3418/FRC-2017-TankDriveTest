@@ -5,6 +5,7 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.team3418.frc2016.Constants;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends Subsystem {
@@ -23,30 +24,34 @@ public class Shooter extends Subsystem {
     	//initialize shooter hardware settings
 		System.out.println("Shooter Initialized");
 		//leftshooter
-				
+						
 		mShooterTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		if (mShooterTalon.isSensorPresent(
+                CANTalon.FeedbackDevice.CtreMagEncoder_Relative) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
+            DriverStation.reportError("Could not detect shooter encoder!", false);
+		}
+		
 		mShooterTalon.enableBrakeMode(false);
 		
-		mShooterTalon.setVoltageRampRate(36.0);
 		mShooterTalon.enableBrakeMode(false);
-		mShooterTalon.clearStickyFaults();
 		
-		mShooterTalon.reverseSensor(false);
-		mShooterTalon.reverseOutput(true);
+		mShooterTalon.reverseSensor(true);
+		mShooterTalon.reverseOutput(false);
 		
 		mShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
 		mShooterTalon.set(0);
 		
 		mShooterTalon.configNominalOutputVoltage(+0.0f, -0.0f);
-		mShooterTalon.configPeakOutputVoltage(+12.0f, -12.0f);
+		mShooterTalon.configPeakOutputVoltage(+12.0f, 0f);
 		
 		mShooterTalon.setProfile(0);
 		mShooterTalon.setPID(Constants.kFlywheelKp, Constants.kFlywheelKi, Constants.kFlywheelKd, Constants.kFlywheelKf,
                 Constants.kFlywheelIZone, Constants.kFlywheelRampRate, 0);
+		mShooterTalon.setAllowableClosedLoopErr(Constants.kFlywheelAllowableError);
 		
-		mTargetRpm = 0;
-		mTargetSpeed = 0;
-	}
+		
+		mTargetRpm = 2400;
+		}
     
     public enum ShooterReadyState {
     	READY, NOT_READY
@@ -54,13 +59,8 @@ public class Shooter extends Subsystem {
 
     
     //
-    private double mTargetSpeed;
     private double mTargetRpm;
-    
-    public void setTargetSpeed(double speed){
-    	mTargetSpeed = speed*1000;
-    }
-    
+       
     public void setTargetRpm(double rpm){
     	mTargetRpm = rpm;
     }
@@ -69,9 +69,6 @@ public class Shooter extends Subsystem {
     	return mTargetRpm;
     }
     
-    public double getTargetSpeed(){
-    	return mTargetSpeed;
-    }
     //
     
     //
@@ -125,9 +122,9 @@ public class Shooter extends Subsystem {
 	//
 	
 	//set shooter speed methods
-	public void setRpm(){
+	public void setRpm(double rpm){
 		mShooterTalon.changeControlMode(TalonControlMode.Speed);
-		mShooterTalon.setSetpoint(mTargetRpm);
+		mShooterTalon.set(rpm);
 	}
 	
 	public void setOpenLoop(double speed){
@@ -155,7 +152,10 @@ public class Shooter extends Subsystem {
         SmartDashboard.putNumber("Flywheel_Setpoint", mShooterTalon.getSetpoint());
         SmartDashboard.putBoolean("Flywheel_On_Target", isOnTarget());
         SmartDashboard.putNumber("Flywheel_Closed_Loop_error", mShooterTalon.getClosedLoopError());
+        SmartDashboard.putNumber("Flywheel_Closed_Loop_error_Number", mShooterTalon.getClosedLoopError());
         SmartDashboard.putNumber("Flywheel_Output_Current", mShooterTalon.getOutputCurrent());
+        SmartDashboard.putNumber("Encoder_Velocity", mShooterTalon.getEncVelocity());
+        SmartDashboard.putNumber("Closed_Loop_Ramp_Rate", mShooterTalon.getCloseLoopRampRate());
 	}
     
     
