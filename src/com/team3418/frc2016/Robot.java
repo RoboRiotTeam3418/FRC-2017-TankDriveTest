@@ -2,10 +2,8 @@ package com.team3418.frc2016;
 
 // import classes used in main robot program
 import com.team3418.frc2016.Constants;
-import com.team3418.frc2016.subsystems.Shooter;
-
+import com.team3418.frc2016.subsystems.Climber;
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 
 /**
  * The main robot class, which instantiates all robot parts and helper classes.
@@ -13,14 +11,14 @@ import edu.wpi.first.wpilibj.RobotDrive.MotorType;
  */
 public class Robot extends IterativeRobot {
     // Subsystems
-	Shooter mShooter = new Shooter();
+	//Shooter mShooter = new Shooter(); // single wheel shooter
+	Climber mClimber = new Climber();
 	
     // Other parts of the robot
     ControlBoard mControls = ControlBoard.getInstance();
-    //RobotDrive mDrive = new RobotDrive(Constants.kLeftMotorPWMID, Constants.kRightMotorPWMID);
+    RobotDrive mDrive = new RobotDrive(Constants.kLeftMotorPWMID, Constants.kRightMotorPWMID);
     
     
-	double mNow;
     
     /**
      * This function is run when the robot is first started up and should be
@@ -29,11 +27,13 @@ public class Robot extends IterativeRobot {
     
     
     private void stopAllSubsystems(){
-    	mShooter.stop();
+    	//mShooter.stop(); // single wheel shooter
+    	mClimber.stop();
 	}
     
     private void updateAllSubsystems() {
-    	mShooter.updateSubsystemState();
+    	//mShooter.updateSubsystemState(); // single wheel shooter
+    	mClimber.updateSubsystemState();
     }
     
     
@@ -74,10 +74,8 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
     	//set states of subsystems depending on operator controls or the state of other subsystems
-    	
-    	mNow = Timer.getFPGATimestamp();
-    	
-    	
+    	    	
+    	/* single wheel shooter
     	if(mControls.decreaseShooterSetpointButton()){
     		if (mShooter.getTargetRpm() > 0){
         		mShooter.setTargetRpm(mShooter.getTargetRpm() - 10);
@@ -92,13 +90,23 @@ public class Robot extends IterativeRobot {
     	} else {
     		mShooter.stop();
     	}
+    	*/
+    	
+    	if(mControls.getClimberThrottle() > 0 || mControls.getClimberThrottle() > 0){
+    		mClimber.setSpeed(mControls.getClimberThrottle());
+    	} else {
+    		mClimber.stop();
+    	}
+    	
+    	
+    	
     	
     	
     	
     	
     	    	
     	// simple drive control
-    	//mDrive.tankDrive(mControls.getLeftThrottle(), mControls.getRightThrottle());
+    	mDrive.tankDrive(mControls.getLeftThrottle(), mControls.getRightThrottle());
 
 
 

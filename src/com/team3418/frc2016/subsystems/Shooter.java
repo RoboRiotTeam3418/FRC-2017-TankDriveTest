@@ -1,3 +1,4 @@
+
 package com.team3418.frc2016.subsystems;
 
 import com.ctre.CANTalon;
@@ -162,3 +163,4 @@ public class Shooter extends Subsystem {
     
     
 }
+

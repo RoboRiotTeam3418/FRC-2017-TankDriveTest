@@ -16,12 +16,14 @@ public class ControlBoard {
     
     //create joystick object
     private final Joystick mDriverStick;
+    private final Joystick mSecondaryDriverStick;
     
     
     private final double mStickDeadzone = .15;
     
     //initialize joystick objects
     ControlBoard() {
+    	mSecondaryDriverStick =  new Joystick(1);
         mDriverStick = new Joystick(0);
     }
     
@@ -81,6 +83,14 @@ public class ControlBoard {
     	else return 0;
     }
     
+    public double getClimberThrottle(){
+    	return mSecondaryDriverStick.getRawAxis(2);
+    }
+    
+    
+    
+    
+    /*
     public boolean increaseShooterSetpointButton(){
     	return mDriverStick.getRawButton(2);
     }
@@ -92,5 +102,5 @@ public class ControlBoard {
     public boolean spoolShooter(){
     	return mDriverStick.getRawButton(4);
     }
-    
+    */
 }

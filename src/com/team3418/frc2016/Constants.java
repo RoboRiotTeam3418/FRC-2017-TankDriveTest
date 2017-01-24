@@ -26,9 +26,9 @@ public class Constants {
     // PWM
     public static final int kLeftMotorPWMID = 0;
     public static final int kRightMotorPWMID = 1;
+    public static final int kClimberMotorPWMID = 2;
     
-    
-    
+    /* single wheel shooter
  // Flywheel constants
     public static double kFlywheelOnTargetTolerance = 100.0;
     public static double kFlywheelRpmSetpoint = 4200.0;
@@ -41,4 +41,5 @@ public class Constants {
     public static int kFlywheelIZone = (int) (1023.0 / kFlywheelKp);
     public static double kFlywheelRampRate = 0;
     public static int kFlywheelAllowableError = 100;
+    */
 }
